@@ -1,0 +1,15 @@
+{
+    "watch": {
+        "run": "*.js"
+    },
+    "scripts": {
+        "run": "node rohlik.js",
+        "watch": "npm-watch"
+    },
+    "dependencies": {
+        "axios": "^0.19.2",
+        "dotenv": "^8.2.0",
+        "npm-watch": "^0.6.0",
+        "slack-webhook": "^1.0.0"
+    }
+}
