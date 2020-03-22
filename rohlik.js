@@ -4,6 +4,11 @@ const axios = require('axios').create({
     timeout: 10000,
 });
 
+const URL = 'https://www.rohlik.cz/services/frontend-service/timeslots-api/0'
+
+var cloudscraper = require('cloudscraper');
+
+
 config = require('./config.js')
 
 var SlackWebhook = require('slack-webhook')
@@ -29,13 +34,16 @@ slack.send("I restarted and lost my memory...");
 
 doIt = function() {
     config.users.forEach ( e => {
-        axios.request({params : { userId: config.user_id, addressId: e.address}})
+        cloudscraper.get({uri: URL, timeout: 20000, formData : { userId: config.user_id, addressId: e.address}})
             .then(res => {
-                f = res.data.data.firstDeliveryAvailableSinceMessage;
+ //               console.log(res);
+                
+//                console.log(JSON.parse(res).data);
+                f = JSON.parse(res).data.firstDeliveryAvailableSinceMessage;
                 if ( e.lastF != f) {
-                    message =  new Date().toISOString() + " new slot for " + e.name + ": " + f;
+                    message =  "new slot for " + e.name + ": " + f;
                     slack.send(message);
-                    console.log(message);
+                    console.log(new Date().toISOString() + " " + message);
                     e.lastF = f;
                 }
                 else {
@@ -43,10 +51,19 @@ doIt = function() {
                 }
             })
             .catch(function (error) {
-                console.log(error.message);
+                console.log("that's an error " + error.name);
+                console.log(error);
             });
     })
 }
 
 doIt();
 setInterval (doIt, 30000)
+
+
+var server = http.createServer(function(request, response) {
+  response.writeHead(200, {"Content-Type": "text/html"});
+  response.end();
+});
+
+server.listen(process.env.PORT);
