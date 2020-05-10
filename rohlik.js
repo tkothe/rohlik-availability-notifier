@@ -8,7 +8,6 @@ const URL = 'https://www.rohlik.cz/services/frontend-service/timeslots-api/0'
 
 var cloudscraper = require('cloudscraper');
 
-
 config = require('./config.js')
 
 var SlackWebhook = require('slack-webhook')
@@ -36,8 +35,7 @@ doIt = function() {
     config.users.forEach ( e => {
         cloudscraper.get({uri: URL, timeout: 20000, formData : { userId: config.user_id, addressId: e.address}})
             .then(res => {
- //               console.log(res);
-                
+//               console.log(res);
 //                console.log(JSON.parse(res).data);
                 f = JSON.parse(res).data.firstDeliveryAvailableSinceMessage;
                 if ( e.lastF != f) {
@@ -60,7 +58,7 @@ doIt = function() {
 doIt();
 setInterval (doIt, 30000)
 
-
+// respond to health check on
 var server = http.createServer(function(request, response) {
   response.writeHead(200, {"Content-Type": "text/html"});
   response.end();

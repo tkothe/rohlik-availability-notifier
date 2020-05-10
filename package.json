@@ -1,6 +1,6 @@
 {
     "watch": {
-        "run": "*.js"
+        "run": ["*.js", ".env"]
     },
     "scripts": {
         "run": "node rohlik.js",
