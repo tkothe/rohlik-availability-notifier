@@ -7,7 +7,7 @@
         "watch": "npm-watch"
     },
     "dependencies": {
-        "axios": "^0.21.2",
+        "axios": "^0.28.0",
         "dotenv": "^8.2.0",
         "npm-watch": "^0.7.0",
         "slack-webhook": "^1.0.0"
